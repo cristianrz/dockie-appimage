@@ -2,12 +2,13 @@ all: dockie-x86_64.AppImage
 
 dockie-x86_64.AppImage: appimagetool-x86_64.AppImage dockie proot dockie.png docker-hub-pull
 	mkdir -p  AppDir/usr/bin
+	mkdir -p  AppDir/usr/lib/dockie
 	cp AppRun          AppDir/
 	cp dockie.desktop  AppDir/
 	cp dockie.png      AppDir/
 	cp dockie          AppDir/usr/bin
 	cp proot           AppDir/usr/bin
-	cp docker-hub-pull AppDir/usr/bin
+	cp docker-hub-pull AppDir/usr/lib/dockie
 	ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir
 	chmod a-x dockie-x86_64.AppImage
 
