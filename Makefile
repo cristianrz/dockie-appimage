@@ -1,12 +1,13 @@
 all: dockie-x86_64.AppImage
 
-dockie-x86_64.AppImage: appimagetool-x86_64.AppImage dockie proot dockie.png
+dockie-x86_64.AppImage: appimagetool-x86_64.AppImage dockie proot dockie.png docker-hub-pull
 	mkdir -p  AppDir/usr/bin
-	cp AppRun         AppDir/
-	cp dockie.desktop AppDir/
-	cp dockie.png     AppDir/
-	cp dockie         AppDir/usr/bin
-	cp proot          AppDir/usr/bin
+	cp AppRun          AppDir/
+	cp dockie.desktop  AppDir/
+	cp dockie.png      AppDir/
+	cp dockie          AppDir/usr/bin
+	cp proot           AppDir/usr/bin
+	cp docker-hub-pull AppDir/usr/bin
 	ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir
 	chmod a-x dockie-x86_64.AppImage
 
@@ -31,12 +32,17 @@ dockie: dockie-repo
 	cp dockie-repo/dockie .
 	chmod +x dockie
 
+docker-hub-pull: dockie-repo
+	cp dockie-repo/contrib/docker-hub-pull .
+	chmod +x docker-hub-pull
+
 clean:
 	rm -f dockie
 	rm -f dockie.AppImage
 	rm -f appimagetool-x86_64.AppImage
 	rm -f dockie.png
 	rm -f dockie-x86_64.AppImage
+	rm -f docker-hub-pull
 	rm -rf AppDir
 	rm -rf artifacts.zip
 	rm -rf dist
