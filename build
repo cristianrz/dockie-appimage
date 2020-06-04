@@ -2,21 +2,21 @@
 
 set -eu
 
-make_image(){
+make_image() {
 	echo "[+] Getting appimagetool..."
-	get_appimagetool 
+	get_appimagetool
 	echo "[+] Getting dockie..."
 	get_dockie
 	echo "[+] Getting proot..."
 	get_proot
 	echo "[+] Building AppDir..."
-	mkdir -p  AppDir/usr/bin
-	mkdir -p  AppDir/usr/lib/dockie
-	cd AppDir && ln -s usr/bin/dockie AppRun && cd ..
-	cp dockie.desktop  AppDir/
-	cp dockie.png      AppDir/
-	cp dockie          AppDir/usr/bin
-	cp proot           AppDir/usr/bin
+	mkdir -p AppDir/usr/bin
+	mkdir -p AppDir/usr/lib/dockie
+	cp AppRun AppDir/
+	cp dockie.desktop AppDir/
+	cp dockie.png AppDir/
+	cp dockie AppDir/usr/bin
+	cp proot AppDir/usr/bin
 	cp docker-hub-pull AppDir/usr/lib/dockie
 	echo "[+] Building AppImage..."
 	ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir >/dev/null
@@ -27,7 +27,7 @@ make_image(){
 }
 
 get_proot() {
-	curl -sL https://gitlab.com/proot/proot/-/jobs/537307719/artifacts/download > artifacts.zip
+	curl -sL https://gitlab.com/proot/proot/-/jobs/537307719/artifacts/download >artifacts.zip
 	unzip -o artifacts.zip
 	cp dist/proot .
 }
@@ -37,9 +37,8 @@ get_appimagetool() {
 	chmod +x appimagetool-x86_64.AppImage
 }
 
-
 get_dockie() {
-	rm -rf dockie-repo	
+	rm -rf dockie-repo
 	git clone -q --depth 1 https://github.com/cristianrz/dockie.git dockie-repo
 	cp dockie-repo/docs/whale_small.png dockie.png
 	cd dockie-repo
